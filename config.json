@@ -1,0 +1,21 @@
+{
+    "dbUrl": "mongodb://admin:123456@ds219318.mlab.com:19318/ca",
+    "schemas": [
+        {
+            "journeyNumber": 1,
+            "fileds": {
+                "SFID" : "Number",
+                "firstName": "String"
+            } 
+        },
+        {
+            "journeyNumber": 2,
+            "fileds": {
+                "SFID" : "Number",
+                "isValid": "Boolean",
+                "isPurchased": "Boolean"
+            }
+        }
+
+    ]
+}

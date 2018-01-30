@@ -4,5 +4,5 @@ module.exports = function(app) {
   // todoList Routes
   app.route('/cadata')
     .get(dataManager.getData)
-    .post(dataManager.sendData);
+    .post(dataManager.handlePayloads);
 };
