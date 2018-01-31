@@ -3,14 +3,14 @@
     "schemas": [
         {
             "journeyNumber": 1,
-            "fileds": {
+            "fields": {
                 "SFID" : "Number",
                 "firstName": "String"
             } 
         },
         {
             "journeyNumber": 2,
-            "fileds": {
+            "fields": {
                 "SFID" : "Number",
                 "isValid": "Boolean",
                 "isPurchased": "Boolean"

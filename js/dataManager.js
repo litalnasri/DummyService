@@ -17,14 +17,14 @@ exports.getData = function(req, res) {
     mongoose.connect(config.dbUrl);
     
     // define model by journey schema number
-    var journeyCollection = mongoose.model('journey' + journeyNumber, config.schemas.filter(function(schema){ return schema.journeyNumber == journeyNumber})[0].fileds);
+    var journeyCollection = mongoose.model('journey' + journeyNumber, config.schemas.filter(function(schema){ return schema.journeyNumber == journeyNumber})[0].fields);
 
-    // get the query fileds
-    var fileds = req.body.inArguments[0].fileds;
-    fileds.SFID = req.body.keyValue;
+    // get the query fields
+    var fields = req.body.inArguments[0].fields;
+    fields.SFID = req.body.keyValue;
 
-    // check subscriber data by query fileds
-    journeyCollection.findOne(fileds, function(err, subscriber) {
+    // check subscriber data by query fields
+    journeyCollection.findOne(fields, function(err, subscriber) {
 
         if (err) 
             res.send(err)
