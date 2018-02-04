@@ -36,6 +36,10 @@ exports.getData = function(req, res) {
     }); 
   };
 
+  exports.handlePublish = function(req, res) {
+    res.sendStatus(200);
+  }
+  
   function saveDataToDE() {
 
   };

@@ -5,4 +5,7 @@ module.exports = function(app) {
   app.route('/cadata')
     .get(dataManager.getData)
     .post(dataManager.handlePayloads);
+
+    app.route('/publish')
+    .post(dataManager.handlePublish);
 };
