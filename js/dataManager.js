@@ -17,8 +17,16 @@ exports.getData = function(req, res) {
     // connect to the DB
     mongoose.connect(config.dbUrl);
     
-    // define model by journey schema number
-    var journeyCollection = mongoose.model('journey' + journeyNumber, config.schemas.filter(function(schema){ return schema.journeyNumber == journeyNumber})[0].fields);
+    var journeyCollection;
+
+    // define model by journey schema number if doesnt exist
+    if(!mongoose.models['journey' + journeyNumber])
+    {
+        journeyCollection = mongoose.model('journey' + journeyNumber, config.schemas.filter(function(schema){ return schema.journeyNumber == journeyNumber})[0].fields);
+    }
+    else {
+        journeyCollection = mongoose.models['journey' + journeyNumber];
+    }
 
     // get the query fields
     var fields = req.body.inArguments[0].fields;
@@ -36,7 +44,8 @@ exports.getData = function(req, res) {
             res.sendStatus(200);
         }
         else {
-            res.send(err)  ;
+            console.log("error: " + err)
+            res.status(404).send('Not found');
         } 
     }); 
   };
