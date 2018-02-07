@@ -9,6 +9,7 @@ exports.getData = function(req, res) {
 
 
   exports.handlePayloads = function(req, res) {
+      console.log("execute");
 
     // get the journey number
     var journeyNumber = req.body.inArguments[0].journeyNumber;
@@ -26,17 +27,21 @@ exports.getData = function(req, res) {
     // check subscriber data by query fields
     journeyCollection.findOne(fields, function(err, subscriber) {
 
-        if (err) 
-            res.send(err)
+        console.log("query resault: " + subscriber)
+        if (subscriber) {
 
-        res.sendStatus(200);
+            // save the recived data to data extension
+            saveDataToDE();
 
-        // save the recived data to data extension
-        saveDataToDE();
+            res.sendStatus(200);
+        }
+        
+        res.send(err)  
     }); 
   };
 
   exports.handlePublish = function(req, res) {
+    console.log("publish");
     res.sendStatus(200);
   }
   
