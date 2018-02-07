@@ -35,8 +35,9 @@ exports.getData = function(req, res) {
 
             res.sendStatus(200);
         }
-        
-        res.send(err)  
+        else {
+            res.send(err)  ;
+        } 
     }); 
   };
 
