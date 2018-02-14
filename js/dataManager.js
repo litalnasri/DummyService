@@ -4,7 +4,7 @@ var request = require('request');
 mongoose.set('debug', true);
 exports.getData = function(req, res) {
     
-      res.json(config.schemas);
+      res.json(config.journeySchemas);
   
   };
 
