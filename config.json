@@ -1,6 +1,10 @@
 {
     "dbUrl": "mongodb://admin:123456@ds219318.mlab.com:19318/ca",
-    "schemas": [
+    "configSchema": {
+        "dataExtensionName": "String",
+        "token": "String"
+    },
+    "journeySchemas": [
         {
             "journeyNumber": 1,
             "fields": {
@@ -16,6 +20,5 @@
                 "isPurchased": "Boolean"
             }
         }
-
     ]
 }

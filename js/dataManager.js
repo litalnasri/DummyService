@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var config = require('../config.json');
-
+var request = require('request');
+mongoose.set('debug', true);
 exports.getData = function(req, res) {
     
       res.json(config.schemas);
@@ -22,7 +23,7 @@ exports.getData = function(req, res) {
     // define model by journey schema number if doesnt exist
     if(!mongoose.models['journey' + journeyNumber])
     {
-        journeyCollection = mongoose.model('journey' + journeyNumber, config.schemas.filter(function(schema){ return schema.journeyNumber == journeyNumber})[0].fields);
+        journeyCollection = mongoose.model('journey' + journeyNumber, config.journeySchemas.filter(function(schema){ return schema.journeyNumber == journeyNumber})[0].fields);
     }
     else {
         journeyCollection = mongoose.models['journey' + journeyNumber];
@@ -39,7 +40,7 @@ exports.getData = function(req, res) {
         if (subscriber) {
 
             // save the recived data to data extension
-            saveDataToDE();
+            saveDataToDE(subscriber._doc);
 
             res.sendStatus(200);
         }
@@ -55,6 +56,42 @@ exports.getData = function(req, res) {
     res.sendStatus(200);
   }
   
-  function saveDataToDE() {
+  function saveDataToDE(subscriber) {
 
+    var deName;
+    var token;
+    var configCollection;
+    
+    if(!mongoose.models['config1'])
+    {
+        configCollection = mongoose.model('config1', config.configSchema);
+    }
+    else {
+        configCollection = mongoose.models['config1'];
+    }
+
+    configCollection.find({}, function(err,doc){
+        deName = doc[0].dataExtensionName;
+        token = doc[0].token;
+
+        var key = subscriber.SFID;
+        delete subscriber['_id'];
+        delete subscriber['SFID'];
+
+        var values = subscriber;
+ 
+        request.post({
+        headers: {'Authorization' : `Bearer ${token}`, 'Content-Type' : 'application/json'},
+        url:     `https://www.exacttargetapis.com/hub/v1/dataevents/key:${deName}/rowset`,
+        json: true,
+        body: [
+            {
+                "keys": { "SFID": key},
+                "values": values
+            }
+        ]
+        }, function(error, response, body){
+        console.log(body);
+        });
+    });   
   };
