@@ -42,11 +42,20 @@ exports.getData = function(req, res) {
             // save the recived data to data extension
             saveDataToDE(subscriber._doc);
 
-            res.sendStatus(200);
+            // ** For CA without split **
+            // res.sendStatus(200);
+
+            // ** For CA with split **
+            res.send({"branchResult": "valid_path"});
         }
         else {
             console.log("error: " + err)
-            res.status(404).send('Not found');
+
+            // ** For CA without split **
+            // res.status(404).send('Not found');
+
+            // ** For CA with split **
+            res.send({"branchResult": "not_valid_path"});
         } 
     }); 
   };
