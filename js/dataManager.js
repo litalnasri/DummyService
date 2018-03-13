@@ -35,10 +35,11 @@ exports.getData = function(req, res) {
 
     // check subscriber data by query fields
     journeyCollection.findOne(fields, function(err, subscriber) {
-
+        
+        setTimeout(function(subscriber) {
         console.log("query resault: " + subscriber)
         if (subscriber) {
-
+           
             // save the recived data to data extension
             saveDataToDE(subscriber._doc);
 
@@ -57,6 +58,7 @@ exports.getData = function(req, res) {
             // ** For CA with split **
             res.send({"branchResult": "not_valid_path"});
         } 
+    }, 60000, subscriber);
     }); 
   };
 
