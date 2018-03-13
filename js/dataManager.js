@@ -11,6 +11,7 @@ exports.getData = function(req, res) {
 
   exports.handlePayloads = function(req, res) {
       console.log("execute");
+      var isSentRes = false;
 
     // get the journey number
     var journeyNumber = req.body.inArguments[0].journeyNumber;
@@ -36,9 +37,17 @@ exports.getData = function(req, res) {
     // check subscriber data by query fields
     journeyCollection.findOne(fields, function(err, subscriber) {
         
+        // timeout case simulation
         setTimeout(function(subscriber) {
         console.log("query resault: " + subscriber)
-        if (subscriber) {
+
+        // if already sent MC response (timeout occurred)
+        if (isSentRes) {
+
+            // save the recived data to data extension
+            saveDataToDE(subscriber._doc);
+        }
+        else if (subscriber) {
            
             // save the recived data to data extension
             saveDataToDE(subscriber._doc);
@@ -48,6 +57,7 @@ exports.getData = function(req, res) {
 
             // ** For CA with split **
             res.send({"branchResult": "valid_path"});
+            isSentRes = true;
         }
         else {
             console.log("error: " + err)
@@ -57,9 +67,20 @@ exports.getData = function(req, res) {
 
             // ** For CA with split **
             res.send({"branchResult": "not_valid_path"});
+            isSentRes = true;
         } 
     }, 60000, subscriber);
     }); 
+
+    // handle timeout
+    setTimeout(function(res) {
+
+        // if response hasn't sent to marketing cloud yet - sends OK status while the proccess of the function works
+        if (!isSentRes) {
+            res.send({"branchResult": "valid_path"});
+            isSentRes = true;
+        }
+    }, 50000, res)
   };
 
   exports.handlePublish = function(req, res) {
