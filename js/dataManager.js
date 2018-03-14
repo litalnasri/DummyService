@@ -80,7 +80,7 @@ exports.getData = function(req, res) {
             res.send({"branchResult": "valid_path"});
             isSentRes = true;
         }
-    }, 50000, res)
+    }, 29000, res)
   };
 
   exports.handlePublish = function(req, res) {
