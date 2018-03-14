@@ -37,12 +37,12 @@ exports.getData = function(req, res) {
     // check subscriber data by query fields
     journeyCollection.findOne(fields, function(err, subscriber) {
         
-        // timeout case simulation
+        // ** timeout case simulation **
         setTimeout(function(subscriber) {
         console.log("query resault: " + subscriber)
 
         // if already sent MC response (timeout occurred)
-        if (isSentRes) {
+        if (isSentRes && subscriber) {
 
             // save the recived data to data extension
             saveDataToDE(subscriber._doc);
@@ -59,7 +59,7 @@ exports.getData = function(req, res) {
             res.send({"branchResult": "valid_path"});
             isSentRes = true;
         }
-        else {
+        else if (!isSentRes && !subscriber) {
             console.log("error: " + err)
 
             // ** For CA without split **
