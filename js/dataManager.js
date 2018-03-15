@@ -70,7 +70,7 @@ exports.getData = function(req, res) {
             res.send({"branchResult": "not_valid_path"});
             isSentRes = true;
         } 
-    }, 60000, subscriber);
+    }, 6000, subscriber);
     }); 
 
     // handle timeout
@@ -81,7 +81,7 @@ exports.getData = function(req, res) {
             res.send({"branchResult": "valid_path"});
             isSentRes = true;
         }
-    }, 29000, res)
+    }, 2900, res)
   };
 
   exports.handlePublish = function(req, res) {
