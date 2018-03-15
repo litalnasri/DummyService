@@ -13,6 +13,7 @@ exports.getData = function(req, res) {
       console.log("execute");
       var isSentRes = false;
 
+      console.log(req.body);
     // get the journey number
     var journeyNumber = req.body.inArguments[0].journeyNumber;
 
