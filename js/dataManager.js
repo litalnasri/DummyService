@@ -88,6 +88,12 @@ exports.getData = function(req, res) {
     console.log("publish");
     res.sendStatus(200);
   }
+
+  exports.isValid = function(req, res) {
+    console.log("isValid");
+    console.log(req.body);
+    res.sendStatus(200);
+  }
   
   function saveDataToDE(subscriber) {
 

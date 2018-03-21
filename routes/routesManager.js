@@ -8,4 +8,7 @@ module.exports = function(app) {
 
     app.route('/publish')
     .post(dataManager.handlePublish);
+
+    app.route('/isValid')
+    .post(dataManager.isValid);
 };
