@@ -92,6 +92,8 @@ exports.getData = function(req, res) {
   exports.isValid = function(req, res) {
     console.log("isValid");
     console.log(req.body);
+
+    console.log('sender: ' + req.connection.remoteAddress);
     res.sendStatus(200);
   }
   
