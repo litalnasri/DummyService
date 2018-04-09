@@ -94,7 +94,8 @@ exports.getData = function(req, res) {
     console.log(req.body);
 
     console.log('sender: ' + req.connection.remoteAddress);
-    console.log('headers: ' + req.headers['x-forwarded-for']);
+    console.log('req headers: ' + req.headers['x-forwarded-for']);
+    console.log("res headers: " + JSON.stringify(res.headers));
     res.sendStatus(200);
   }
   
