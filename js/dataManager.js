@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var config = require('../config.json');
 var request = require('request');
+const verifyJwt = require('../lib/jsw');
 mongoose.set('debug', true);
 exports.getData = function(req, res) {
     
@@ -85,12 +86,47 @@ exports.getData = function(req, res) {
   };
 
   exports.handlePublish = function(req, res) {
+    var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
     console.log("publish");
     res.sendStatus(200);
   }
 
   exports.isValid = function(req, res) {
     console.log("isValid");
+
+    verifyJwt(req.body, key, (err, decoded) => {
+		// verification error -> unauthorized request
+		if (err) {
+			console.error(err);
+			return res.status(401).end();
+		}
+
+		if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
+			let serviceCloudId;
+
+            console.log("decoded: " + JSON.stringify(decoded.inArguments));
+		
+			// // Call the function that retrieves desired data from Service Cloud
+			// sfdc.retrieveFieldOfObject(serviceCloudId, (err, fieldValue) => {
+			// 	if (err) {
+			// 		console.error(err);
+			// 		return res.status(500).end();
+			// 	}
+
+			// 	// Check the returned value to make the decision which path should be
+			// 	// followed and return the branchResult accordingly.
+			// 	if (fieldValue === '<FIELD VALUE THAT LEADS RESULT TO PATH 1>') {
+			// 		return res.status(200).json({branchResult: '<KEY FOR PATH 1>'});
+			// 	} else {
+			// 		return res.status(200).json({branchResult: '<KEY FOR PATH 2>'});
+			// 	}
+			// });
+		} else {
+			console.error('inArguments invalid.');
+			return res.status(400).end();
+		}
+	});
+
     console.log(req.body);
 
     console.log('sender: ' + req.connection.remoteAddress);
@@ -98,6 +134,8 @@ exports.getData = function(req, res) {
     console.log("res headers: " + JSON.stringify(res.headers));
     res.sendStatus(200);
   }
+
+
   
   function saveDataToDE(subscriber) {
 
