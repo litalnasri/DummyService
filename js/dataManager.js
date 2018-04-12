@@ -107,21 +107,6 @@ exports.getData = function(req, res) {
 
             console.log("decoded: " + JSON.stringify(decoded.inArguments));
 		
-			// // Call the function that retrieves desired data from Service Cloud
-			// sfdc.retrieveFieldOfObject(serviceCloudId, (err, fieldValue) => {
-			// 	if (err) {
-			// 		console.error(err);
-			// 		return res.status(500).end();
-			// 	}
-
-			// 	// Check the returned value to make the decision which path should be
-			// 	// followed and return the branchResult accordingly.
-			// 	if (fieldValue === '<FIELD VALUE THAT LEADS RESULT TO PATH 1>') {
-			// 		return res.status(200).json({branchResult: '<KEY FOR PATH 1>'});
-			// 	} else {
-			// 		return res.status(200).json({branchResult: '<KEY FOR PATH 2>'});
-			// 	}
-			// });
 		} else {
 			console.error('inArguments invalid.');
 			return res.status(400).end();
