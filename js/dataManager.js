@@ -101,7 +101,7 @@ exports.getData = function(req, res) {
 
     console.log("body:" + JSON.stringify(req.body));
     
-    var decoded = require('jsonwebtoken').decode(body, {complete: true});
+    var decoded = require('jsonwebtoken').decode(req.body, {complete: true});
     console.log(decoded.header);
     console.log(decoded.payload);
 
