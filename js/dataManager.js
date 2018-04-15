@@ -101,29 +101,31 @@ exports.getData = function(req, res) {
 
     console.log("body:" + JSON.stringify(req.body));
     
+    console.log("** decoded **");
     var decoded = require('jsonwebtoken').decode(req.body, {complete: true});
     console.log(decoded.header);
     console.log(decoded.payload);
 
-    // var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
+    console.log("** verify **");
 
-    // verifyJwt(req.body, (err, decoded) => {
-	// 	// verification error -> unauthorized request
-	// 	if (err) {
-	// 		console.error("error: " + err);
-	// 		// return res.status(401).end();
-	// 	}
+    var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
 
-	// 	if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
+    verifyJwt(req.body, key, (err, decoded) => {
+		// verification error -> unauthorized request
+		if (err) {
+			console.error("error: " + err);
+			// return res.status(401).end();
+		}
+
+		if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
 		
-
-    //         console.log("decoded: " + JSON.stringify(decoded.inArguments));
+            console.log("decoded: " + JSON.stringify(decoded.inArguments));
 		
-	// 	} else {
-	// 		console.error('inArguments invalid.');
-	// 		// return res.status(400).end();
-	// 	}
-	// });
+		} else {
+			console.error('inArguments invalid.');
+			// return res.status(400).end();
+		}
+	});
 
     // console.log(req.body);
 
