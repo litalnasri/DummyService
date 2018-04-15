@@ -101,15 +101,15 @@ exports.getData = function(req, res) {
 
     console.log("body:" + JSON.stringify(req.body));
     
-    console.log("** decoded **");
-    var decoded = require('jsonwebtoken').decode(req.body, {complete: true});
-    console.log(decoded.header);
-    console.log(decoded.payload);
+    // console.log("** decoded **");
+    // var decoded = require('jsonwebtoken').decode(req.body, {complete: true});
+    // console.log(decoded.header);
+    // console.log(decoded.payload);
 
     console.log("** verify **");
 
     var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
-
+    console.log("bosy stringify: " + JSON.stringify(req.body));
     verifyJwt(JSON.stringify(req.body), key, (err, decoded) => {
 		// verification error -> unauthorized request
 		if (err) {
@@ -117,9 +117,11 @@ exports.getData = function(req, res) {
 			// return res.status(401).end();
 		}
 
+        console.log("decoded: " + JSON.stringify(decoded));
+
 		if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
 		
-            console.log("decoded: " + JSON.stringify(decoded.inArguments));
+            console.log("decoded in args: " + JSON.stringify(decoded.inArguments));
 		
 		} else {
 			console.error('inArguments invalid.');
