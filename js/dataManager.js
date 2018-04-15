@@ -110,7 +110,7 @@ exports.getData = function(req, res) {
 
     var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
 
-    verifyJwt(req.body, key, (err, decoded) => {
+    verifyJwt(JSON.stringify(req.body), key, (err, decoded) => {
 		// verification error -> unauthorized request
 		if (err) {
 			console.error("error: " + err);
