@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var config = require('../config.json');
 var request = require('request');
-const verifyJwt = require('../lib/jsw');
+var jwt = require('jsonwebtoken');
+// const verifyJwt = require('../lib/jsw');
 mongoose.set('debug', true);
 exports.getData = function(req, res) {
     
@@ -94,44 +95,30 @@ exports.getData = function(req, res) {
   exports.isValid = function(req, res) {
     console.log("isValid");
 
-    // console.log('sender: ' + req.connection.remoteAddress);
-    // console.log('req headers x: ' + req.headers['x-forwarded-for']);
-    // console.log("req headers: " + JSON.stringify(req.headers));
-    // console.log("res headers: " + JSON.stringify(res.headers));
-
-    console.log("body:" + JSON.stringify(req.body));
-    
+    // console.log('sender: ' + req.headers['x-forwarded-for']);
     // console.log("** decoded **");
     // var decoded = require('jsonwebtoken').decode(req.body, {complete: true});
     // console.log(decoded.header);
     // console.log(decoded.payload);
 
     console.log("** verify **");
+    console.log("body stringify: " + req.body.toString('utf8'));
 
     var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
-    console.log("body stringify: " + req.body.toString('utf8'));
-    verifyJwt(req.body.toString('utf8'), key, (err, decoded) => {
+
+    jwt.verify(req.body.toString('utf8'), key, { algorithm: 'HS256' }, (err, decoded) => {
 		// verification error -> unauthorized request
 		if (err) {
 			console.error("error: " + err);
-			// return res.status(401).end();
 		}
 
-        console.log("decoded: " + JSON.stringify(decoded));
-
 		if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-		
-            console.log("decoded in args: " + JSON.stringify(decoded.inArguments));
-		
+            console.log("decoded: " + JSON.stringify(decoded));
 		} else {
 			console.error('inArguments invalid.');
-			// return res.status(400).end();
 		}
 	});
 
-    // console.log(req.body);
-
-    
     res.sendStatus(200);
   }
 
