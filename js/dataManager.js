@@ -98,7 +98,7 @@ exports.getData = function(req, res) {
 
     console.log("** verify **");
     console.log("headers: " + JSON.stringify(req.headers));
-    console.log("body: " + req.body.toString());
+    console.log("body: " + JSON.stringify(req.body);
 
     var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
 
