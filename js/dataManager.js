@@ -89,22 +89,16 @@ exports.getData = function(req, res) {
   exports.handlePublish = function(req, res) {
 
     console.log("publish");
+    console.log("body: " + req.body.toString());
     res.sendStatus(200);
   }
 
   exports.isValid = function(req, res) {
     console.log("isValid");
 
-    // console.log('sender: ' + req.headers['x-forwarded-for']);
-    // console.log("** decoded **");
-    // var decoded = require('jsonwebtoken').decode(req.body, {complete: true});
-    // console.log(decoded.header);
-    // console.log(decoded.payload);
-
     console.log("** verify **");
     console.log("headers: " + JSON.stringify(req.headers));
     console.log("body: " + req.body.toString());
-    // console.log("body stringify: " + req.body.toString('utf8'));
 
     var key = "1iVc9FDnmSOGH77PYC0iEHQlXfGlvRRsEDGMS3SLB0ce04nOOLSPWa7EtEDhsjfhmXH9tLYeaMMATagRx2I6g8xJJRCCsqseO9HhMj7a8FlJkdxhKfpc6PuELQ81cQJ_Qc3wK9qsCXB95NBaUk6O91wpNHF3-8e0l2-yCaMzanLLl4cSnzFy4cXEYCfDFKmhPdl6WeWq5ySbjOLpFC4klgAVVG-ZJslCDyVvcqpEA4q8fvnOWJ9iEPItTMny5w2";
 
